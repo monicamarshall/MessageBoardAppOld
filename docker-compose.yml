@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  db-v1:
+    image: "postgres:12.0-alpine"
+    env_file:
+      - ./.env
+    ports:
+      - "5432:5432"
+    volumes: 
+      - postgres-data:/var/lib/postgresql/data/
+  web-v1:
+    build: .
+    image: messageboard-app-v1
+    command: gunicorn messageboardapp.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static-volume:/static
+    #expose:
+      #- 8088 #expose will hide the 8088 port from outside the docker container
+    ports:
+      - 8000:8000  #8090 is exposed to outside the docker container
+    env_file:
+      - ./.env
+    depends_on:
+      - db-v1
+#  nginx:
+#    build: ./nginx
+#    image: messageboard-nginx-v1
+#    ports:
+#      - 1339:80  #1339 will be exposed to outside the docker container
+#    volumes:
+#      - static-volume:/static
+#    depends_on:
+#      - web
+volumes:
+  postgres-data:
+  static-volume:
