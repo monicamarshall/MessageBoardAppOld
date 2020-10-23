@@ -1,0 +1,17 @@
+1. enable ingress using admin powershell/cmd
+2. apply mandatory.yaml with kubectl apply
+3. verify the nginx-ingress-controller is running in the 'ingress-nginx' namespace on kubernetes cluster.
+4. To remove the nginx-ingress controller run kubectl delete -f <filename>
+
+PS C:\WINDOWS\system32> minikube addons enable ingress
+* The 'ingress' addon is enabled
+PS C:\WINDOWS\system32>
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
+
+PS C:\eclipseWorkspace2020-09\MessageBoardApp> kubectl get pods -n ingress-nginx
+NAME                                        READY   STATUS    RESTARTS   AGE
+nginx-ingress-controller-7f74f657bd-4kskh   1/1     Running   0          3h45m
+
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml

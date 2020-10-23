@@ -1,0 +1,32 @@
+<h1>Message Board</h1>
+
+	<h1>Add post</h1>
+	<div>
+		<form action="/" method="post" novalidate>
+            {% csrf_token %}
+			<div>
+				<fieldset>
+					<div>
+						<div>
+							<label>Text:</label>
+							{{ form.body }}
+						</div>
+					</div>
+				</fieldset>
+				</br>
+				<input type="submit" value="Save" name="_save">
+			</div>
+		</form>
+	</div>
+
+
+<ul>
+  {% for post in all_posts_list %}
+    <li>{{ post.text }}</li>
+  {% endfor %}
+</ul>
+<script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
